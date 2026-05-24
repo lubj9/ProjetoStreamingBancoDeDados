@@ -1,0 +1,87 @@
+--------------------------------------------------
+-- 3.1) Consulta envolvendo uma tabela
+-- Obrigatório: WHERE e LIKE
+--------------------------------------------------
+
+SELECT *
+FROM Conteudo
+WHERE titulo LIKE '%The%'
+ORDER BY titulo;
+
+--------------------------------------------------
+-- 3.2) Consulta envolvendo uma tabela
+-- Obrigatório: WHERE com operador relacional
+--------------------------------------------------
+
+SELECT *
+FROM Avaliacao
+WHERE nota >= 4.8
+ORDER BY nota DESC;
+
+--------------------------------------------------
+-- 3.3) Consulta com SUBCONSULTA
+--------------------------------------------------
+
+SELECT nome, email
+FROM Usuario
+WHERE id_usuario IN (
+    SELECT id_usuario
+    FROM Assinatura
+    WHERE tipo_plano = 'Premium'
+)
+ORDER BY nome;
+
+--------------------------------------------------
+-- 3.4) Consulta com GROUP BY envolvendo DUAS tabelas
+-- Obrigatório: INNER JOIN
+--------------------------------------------------
+
+SELECT Conteudo.genero,
+       COUNT(Visualizacao.id_visualizacao) AS total_visualizacoes
+FROM Conteudo
+INNER JOIN Visualizacao
+ON Conteudo.id_conteudo = Visualizacao.id_conteudo
+GROUP BY Conteudo.genero
+ORDER BY total_visualizacoes DESC;
+
+--------------------------------------------------
+-- 3.5) Consulta com GROUP BY e HAVING envolvendo DUAS tabelas
+-- Obrigatório: INNER JOIN
+--------------------------------------------------
+
+SELECT Conteudo.tipo,
+       COUNT(Avaliacao.id_avaliacao) AS total_avaliacoes
+FROM Conteudo
+INNER JOIN Avaliacao
+ON Conteudo.id_conteudo = Avaliacao.id_conteudo
+GROUP BY Conteudo.tipo
+HAVING COUNT(Avaliacao.id_avaliacao) >= 2
+ORDER BY total_avaliacoes DESC;
+
+--------------------------------------------------
+-- 3.6) Consulta contendo DUAS tabelas
+-- Obrigatório: LEFT JOIN ou RIGHT JOIN
+--------------------------------------------------
+
+SELECT Usuario.nome,
+       Assinatura.tipo_plano,
+       Assinatura.valor
+FROM Usuario
+LEFT JOIN Assinatura
+ON Usuario.id_usuario = Assinatura.id_usuario
+ORDER BY Usuario.nome;
+
+--------------------------------------------------
+-- 3.7) Consulta contendo TRÊS ou mais tabelas
+--------------------------------------------------
+
+SELECT Usuario.nome,
+       Conteudo.titulo,
+       Conteudo.genero,
+       Avaliacao.nota
+FROM Usuario
+INNER JOIN Avaliacao
+ON Usuario.id_usuario = Avaliacao.id_usuario
+INNER JOIN Conteudo
+ON Conteudo.id_conteudo = Avaliacao.id_conteudo
+ORDER BY Usuario.nome;

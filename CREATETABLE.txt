@@ -1,39 +1,39 @@
 CREATE TABLE Usuario (
-    id_usuario INTEGER PRIMARY KEY,
+    id_usuario INT PRIMARY KEY,
     nome VARCHAR(100),
     email VARCHAR(100),
     data_nascimento DATE
 );
 
 CREATE TABLE Conteudo (
-    id_conteudo INTEGER PRIMARY KEY,
+    id_conteudo INT PRIMARY KEY,
     titulo VARCHAR(100),
     tipo VARCHAR(50),
     genero VARCHAR(50)
 );
 
 CREATE TABLE Assinatura (
-    id_assinatura INTEGER PRIMARY KEY,
-    tipo_plano VARCHAR(100),
-    valor NUMERIC(10,2),
-    id_usuario INTEGER,
+    id_assinatura INT PRIMARY KEY,
+    tipo_plano VARCHAR(50),
+    valor DECIMAL(10,2),
+    id_usuario INT,
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 );
 
 CREATE TABLE Visualizacao (
-    id_visualizacao INTEGER PRIMARY KEY,
-    id_usuario INTEGER,
-    id_conteudo INTEGER,
+    id_visualizacao INT PRIMARY KEY,
+    id_usuario INT,
+    id_conteudo INT,
     data_visualizacao DATE,
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
     FOREIGN KEY (id_conteudo) REFERENCES Conteudo(id_conteudo)
 );
 
 CREATE TABLE Avaliacao (
-    id_avaliacao INTEGER PRIMARY KEY,
-    id_usuario INTEGER,
-    id_conteudo INTEGER,
-    nota NUMERIC(2,1),
+    id_avaliacao INT PRIMARY KEY,
+    id_usuario INT,
+    id_conteudo INT,
+    nota DECIMAL(2,1),
     comentario VARCHAR(255),
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
     FOREIGN KEY (id_conteudo) REFERENCES Conteudo(id_conteudo)
